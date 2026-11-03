@@ -1,0 +1,33 @@
+directive simulation { final=600; plots=[Sample();Buffer();Reagent()]; }
+def Sample() = <t^ sample>
+def Buffer() = <t^ buffer>
+def gate1() = <t^ reagentA>
+def gate2() = <t^ reagentA>
+def Addition() = <t^ reagentA>
+def minimum() = <t^ reagentA>
+// Initial quantities are not droplet volumes or operation values.
+(
+  10 Sample() // @node id=N1 fluid=i1 value=1
+| 20 Buffer() // @node id=N2 fluid=i2 value=1
+| 5 gate1() // @node id=N3 fluid=t1 value=1
+| 5 gate2() // @node id=N4 fluid=t2 value=1
+| 5 Addition() // @node id=N5 fluid=t3 value=1
+| 5 minimum() // @node id=N6 fluid=i3 value=1
+
+// Graph editor protocol
+// @mix id=N7 inputs=N3,N4 value=1
+// @mix id=N12 inputs=N1,N2 value=1
+// @heat id=N17 input=N7 value=1
+// @heat id=N8 input=N12 value=1
+// @split id=N15 input=N17 value=1
+// @split id=N16 input=N8 value=1
+// @mix id=N13 inputs=N15,N16,N5 value=1
+// @mix id=N14 inputs=N15,N16,N6 value=1
+// @heat id=N19 input=N14 value=1
+// @heat id=N20 input=N13 value=1
+// @mix id=N11 inputs=N20,N19 value=1
+// @heat id=N18 input=N11 value=1
+// @detect id=N22 input=N18 value=1 count=1
+// @output id=N10 input=N22 output=output1
+// DSD-GRAPH-LAYOUT {"N1":[600,50],"N2":[770,50],"N3":[230,50],"N4":[410,50],"N5":[230,420],"N6":[770,420],"N7":[410,169],"N12":[600,169],"N17":[600,293],"N8":[410,293],"N15":[410,417],"N16":[600,417],"N13":[410,541],"N14":[600,541],"N19":[410,665],"N20":[600,665],"N11":[505,789],"N18":[505,913],"N22":[505,1037],"N10":[505,1161]}
+)

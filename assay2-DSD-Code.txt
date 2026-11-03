@@ -1,0 +1,44 @@
+directive simulation {
+  final=600;
+  plots=[AT();BT();CT();DT();ET();FT()];
+}
+
+def AT() = <t^ buffer>
+def BT() = <t^ reagentA>
+def CT() = <t^ buffer>
+def DT() = <t^ reagentA>
+def ET() = <t^ buffer>
+def FT() = <t^ reagentA>
+
+// Initial quantities are not droplet volumes or operation values.
+(
+  20 AT() // @node id=N2 fluid=t2 value=1
+| 10 BT() // @node id=N5 fluid=t5 value=1
+| 5 CT() // @node id=N7 fluid=i2 value=1
+| 10 DT() // @node id=N9 fluid=i4 value=1
+| 5 ET() // @node id=N11 fluid=t2 value=1
+| 5 FT() // @node id=N13 fluid=t4 value=1
+
+// Graph editor protocol
+// @heat id=N3 input=N2 value=1
+// @detect id=N4 input=N3 value=1 count=1
+// @mix id=N10 inputs=N4,N5 value=1
+// @heat id=N12 input=N10 value=1
+// @detect id=N14 input=N12 value=1 count=1
+// @mix id=N15 inputs=N14,N7 value=1
+// @heat id=N16 input=N15 value=1
+// @detect id=N17 input=N16 value=1 count=1
+// @mix id=N18 inputs=N17,N9 value=1
+// @heat id=N19 input=N18 value=1
+// @detect id=N20 input=N19 value=1 count=1
+// @split id=N21 input=N20 value=1
+// @mix id=N22 inputs=N21,N13 value=1
+// @heat id=N24 input=N22 value=1
+// @detect id=N25 input=N24 value=1 count=1
+// @output id=N9x input=N25 output=output1
+// @mix id=N23 inputs=N21,N11 value=1
+// @heat id=N26 input=N23 value=1
+// @detect id=N27 input=N26 value=1 count=1
+// @output id=N6 input=N27 output=output2
+// DSD-GRAPH-LAYOUT {"N2":[220,130],"N5":[420,340],"N7":[520,640],"N9":[620,940],"N11":[720,1340],"N13":[320,1340],"N3":[220,240],"N4":[220,340],"N10":[320,440],"N12":[320,540],"N14":[320,640],"N15":[420,740],"N16":[420,840],"N17":[420,940],"N18":[520,1040],"N19":[520,1140],"N20":[520,1240],"N21":[520,1340],"N22":[430,1460],"N24":[430,1560],"N25":[430,1660],"N9x":[430,1760],"N23":[620,1460],"N26":[620,1560],"N27":[620,1660],"N6":[620,1760]}
+)
